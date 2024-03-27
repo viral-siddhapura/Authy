@@ -1,5 +1,7 @@
+import { Button } from "@/components/ui/button"
+
 export default function Home() {
   return (
-    <p className="font-semibold">Hello Viral Auth!!</p>
+    <Button size={"lg"} >Click me</Button>
   );
 }
