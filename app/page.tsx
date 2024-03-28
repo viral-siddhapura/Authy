@@ -22,11 +22,13 @@ export default function Home() {
         <p className="text-black text-lg">
           A Simple Authentication Service
         </p>
-        <LoginButton>
-          <Button variant={"default"} size={"lg"}>
-            Sign In
-          </Button>
-        </LoginButton>
+        <div>
+          <LoginButton>
+            <Button variant={"default"} size={"lg"}>
+              Sign In
+            </Button>
+          </LoginButton>
+        </div>
       </div>
     </main>
   );
