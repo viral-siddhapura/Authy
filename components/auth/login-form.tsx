@@ -2,14 +2,14 @@
 
 import { CardWrapper } from "./card-wrapper";
 import * as z from "zod";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "../../schemas";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { FormSuccess } from "../form-success";
 import { FormError } from "../form-error";
-
+import { FormSuccess } from "../form-success";
 import {
     Form,
     FormControl,
@@ -18,8 +18,11 @@ import {
     FormLabel,
     FormMessage,
 } from "../ui/form";
+import { login } from "@/actions/login";
 
 export const LoginForm = () => {
+
+    const [isPending, startTransition] = useTransition();
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
@@ -30,7 +33,9 @@ export const LoginForm = () => {
     });
 
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-        console.log(values);
+        startTransition(() => {
+            login(values);
+        });
     };
 
     return (
@@ -55,6 +60,7 @@ export const LoginForm = () => {
                                     <FormControl>
                                         <Input
                                             {...field}
+                                            disabled={isPending}
                                             type="email"
                                             placeholder="john.doe@example.com"
                                         />
@@ -72,6 +78,7 @@ export const LoginForm = () => {
                                     <FormControl>
                                         <Input
                                             {...field}
+                                            disabled={isPending}
                                             placeholder="******"
                                             type="password"
                                         />
@@ -81,10 +88,11 @@ export const LoginForm = () => {
                             )}
                         />
                     </div>
-                    <FormError message=""></FormError>
-                    <FormSuccess message=""></FormSuccess>
+                    <FormError message="" />
+                    <FormSuccess message="" />
                     <Button
                         type="submit"
+                        disabled={isPending}
                         className="w-full"
                     >
                         Login
