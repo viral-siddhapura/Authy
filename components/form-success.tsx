@@ -1,12 +1,12 @@
 import { CheckCircledIcon } from '@radix-ui/react-icons';
 
-interface FromSuccessProps {
+interface FormSuccessProps {
     message?: string;
 };
 
-export const FromSuccess = (
+export const FormSuccess = ({
     message,
-) : FromSuccessProps => {
+} : FormSuccessProps) => {
 
     if (!message) return null;
 
