@@ -1,5 +1,13 @@
 "use server" // This line usually added for server actions purpose
+import { LoginSchema } from "@/schemas";
+import * as z from "zod";
 
-export const login = (values : any) => {
-    console.log(values);
+export const login = async (values : z.infer<typeof LoginSchema>) => {
+    const validatedFields = LoginSchema.safeParse(values);
+
+    if (!validatedFields.success) {
+        return { error: "Invalid fields!!" };
+    }
+
+    return { success: "Email sent!!"};
 }
