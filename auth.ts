@@ -29,22 +29,24 @@ export const {
     },
     callbacks: {
 
-        // async signIn({ user }) {
+        async signIn({ user, account }){
 
-        //     if (!user || !user.id) {
-        //         console.log("No user or user id found in signIn callback", user);
-        //         return false;
-        //     }
+            // Allow OAuth without email verification
+            if (account?.provider !== 'credentials'){
+                return true;
+            }   
 
-        //     const existingUser = await getUserById(user.id);
+            // Prevent signIn without email verification
+            const exisitingUser = await getUserById(user.id);
+            if (!exisitingUser?.emailVerified){
+                return false;
+            }
 
-        //     if (!existingUser || !existingUser.emailVerified) {
-        //         console.log("User not found or email not verified", user);
-        //         return false;
-        //     }
+            // TODO: Add 2FA check here
 
-        //     return true;
-        // },
+            return true;
+
+        }, 
 
         async session( { token, session } ){
             console.log({
