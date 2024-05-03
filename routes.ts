@@ -1,5 +1,6 @@
 export const publicRoutes = [
     "/",
+    "/auth/confirm-email",
 ];
 
 export const authRoutes = [
