@@ -47,7 +47,7 @@ export const LoginForm = () => {
                 .then((data) => {
                     setError(data?.error);
                     //  TODO: Add when we add 2FA support
-                    // setSuccess(data?.success);
+                    setSuccess(data?.success);
                 });
         });
     };
