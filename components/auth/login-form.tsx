@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
 import { LoginSchema } from "../../schemas";
 import { Input } from "../ui/input";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
@@ -97,6 +98,16 @@ export const LoginForm = () => {
                                             type="password"
                                         />
                                     </FormControl>
+                                    <Button 
+                                        size="sm"
+                                        variant="link"
+                                        asChild
+                                        className="px-0 font-normal"
+                                    >
+                                        <Link href={"/auth/reset"}>
+                                            Forgot Password?
+                                        </Link>
+                                    </Button>
                                     <FormMessage />
                                 </FormItem>
                             )}
