@@ -1,6 +1,34 @@
 import { getVerficationTokenByEmail } from '@/data/verification-token';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from './db';
+import { getPasswordResetTokenByEmail } from '@/data/password-reset-token';
+
+export const generatePasswordResetToken = async (email : string) => {
+
+    const token = uuidv4();
+    const expires = new Date(new Date().getTime() + 3600 * 1000);
+
+    const exisingToken = await getPasswordResetTokenByEmail(email);
+
+    if (exisingToken) {
+        await db.passwordResetToken.delete({
+            where: {
+                id: exisingToken.id,
+            },
+        });
+    }
+
+    const passwordResetToken = await db.passwordResetToken.create({
+        data: {
+            email,
+            token,
+            expiresAt: expires,
+        },
+    });
+
+    return passwordResetToken;
+
+}
 
 export const generateVerificationToken = async (email : string) => {
     const token = uuidv4();
