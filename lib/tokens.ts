@@ -2,6 +2,33 @@ import { getVerficationTokenByEmail } from '@/data/verification-token';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from './db';
 import { getPasswordResetTokenByEmail } from '@/data/password-reset-token';
+import { getTwoFactorTokenByEmail } from '@/data/two-factor-token';
+
+export const generateTwoFactorToken = async (email : string) => {
+    // Generate 6 digit token
+    const token = Math.floor(100000 + Math.random() * 900000).toString();
+    // Expires after 2 minutes
+    const expires = new Date(new Date().getTime() + 2 * 60 * 1000);
+
+    const existingToken = await getTwoFactorTokenByEmail(email);
+    if (existingToken) {
+        await db.twoFactorToken.delete({
+            where: {
+                id: existingToken.id,
+            },
+        });
+    }
+
+    const twoFactorToken = await db.twoFactorToken.create({
+        data: {
+            email,
+            token,
+            expiresAt: expires,
+        },
+    });
+
+    return twoFactorToken;
+};
 
 export const generatePasswordResetToken = async (email : string) => {
 
