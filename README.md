@@ -2,7 +2,7 @@
 
 **Authy** is a comprehensive authentication solution built with Next.js, Auth.js, Prisma, PostgreSQL, and middleware configuration. It offers robust features like OAuth social logins, two-factor authentication, and email verification to ensure secure and seamless user experiences.
 
-**Live Demo**: [Authy Live](authy-ruddy.vercel.app)
+**Live Demo**: [Authy](https://authy-ruddy.vercel.app/)
 
 ## Technologies Used
 | Technology      | Description                                     |
