@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import authConfig from './auth.config';
-import { UserRole } from '.prisma/client';
+// import { UserRole } from '.prisma/client';
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from './lib/db';
 import { getUserById } from './data/user';
@@ -43,7 +43,7 @@ export const {
             }   
 
             // Prevent signIn without email verification
-            const exisitingUser = await getUserById(user.id);
+            const exisitingUser = await getUserById(user.id as string);
             if (!exisitingUser?.emailVerified){
                 return false;
             }
@@ -76,9 +76,9 @@ export const {
             if (token.sub && session.user) {
                 session.user.id = token.sub;
             }
-            if (token.role && session.user) {
-                session.user.role = token.role as UserRole;
-            }
+            // if (token.role && session.user) {
+            //     session.user.role = token.role as UserRole;
+            // }
             return session;
         }
         ,
@@ -92,7 +92,7 @@ export const {
                 return token;
             }
             
-            token.role = exisitingUser.role;
+            // token.role = exisitingUser.role;
             return token;
         }
     },
